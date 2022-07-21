@@ -12,6 +12,7 @@ const SearchParams = () => {
   const [pets, setPets] = useState([]);
   const [breeds] = useBreedList(animal);
   const [theme, setTheme] = useContext(ThemeContext);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     requestPets();
@@ -19,7 +20,7 @@ const SearchParams = () => {
 
   async function requestPets() {
     const res = await fetch(
-      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+      `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}&page=${page}`
     );
     const json = await res.json();
 
@@ -31,6 +32,7 @@ const SearchParams = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          setPage(0);
           requestPets();
         }}
       >
@@ -97,6 +99,29 @@ const SearchParams = () => {
         </label>
         <button style={{ backgroundColor: theme }}>Submit</button>
       </form>
+      <div className="pagination">
+        <button
+          onClick={() => {
+            if (page > 0) {
+              setPage(page - 1);
+              requestPets();
+            }
+            console.log(page);
+          }}
+        >
+          ←
+        </button>
+        <button
+          onClick={() => {
+            if (pets.length > 0) {
+              setPage(page + 1);
+              requestPets();
+            }
+          }}
+        >
+          →
+        </button>
+      </div>
       <Results pets={pets} />
     </div>
   );

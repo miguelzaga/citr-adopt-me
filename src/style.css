@@ -220,6 +220,10 @@ header {
   border: 1px solid cornflowerblue;
 }
 
+.pagination {
+  display: flex;
+}
+
 #modal {
   background-color: rgba(0, 0, 0, 0.9);
   position: fixed;
@@ -269,7 +273,8 @@ header {
     margin-bottom: 20px;
   }
 
-  .search {
+  .search,
+  .pagination {
     width: 55%;
     padding: 15px;
     border-radius: 9px;
